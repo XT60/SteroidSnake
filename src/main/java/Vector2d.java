@@ -43,8 +43,8 @@ public class Vector2d {
         return new Vector2d(Math.min(this.x, other.x), Math.min(this.y, other.y));
     }
 
-    Vector2d add(Vector2d other){
-        return new Vector2d(this.x + other.x, this.y + other.y);
+    static Vector2d add(Vector2d that, Vector2d other){
+        return new Vector2d(that.x + other.x, that.y + other.y);
     }
 
     Vector2d subtract(Vector2d other){
@@ -72,8 +72,10 @@ public class Vector2d {
         return new Vector2d(this.y, this.x);
     }
 
+    public Vector2d reverse() {return new Vector2d(x * (-1), y* (-1));}
+
     public Vector2d applyDirection(Direction mapDirection){
-        return this.add(mapDirection.toUnitVector());
+        return Vector2d.add(mapDirection.toUnitVector(), this);
     }
 
 }

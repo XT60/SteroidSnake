@@ -32,12 +32,31 @@ public enum Direction {
         return clockWiseOrder[(this.orderIndex + moveValue + clockWiseOrder.length) % clockWiseOrder.length];
     }
 
+    public Direction reverse(){
+        return switch (this) {
+            case N -> Direction.S;
+            case E -> Direction.W;
+            case S -> Direction.N;
+            case W -> Direction.E;
+        };
+    }
+
+
     public Vector2d toUnitVector(){;
         return switch (this) {
-            case N -> new Vector2d(0, 1);
+            case N -> new Vector2d(0, -1);
             case E -> new Vector2d(1, 0);
-            case S -> new Vector2d(0, -1);
+            case S -> new Vector2d(0, 1);
             case W -> new Vector2d(-1, 0);
+        };
+    }
+
+    public Vector2d getPerpendicularUnitVector(){
+        return switch (this) {
+            case N -> new Vector2d(-1, 0);
+            case E -> new Vector2d(0, -1);
+            case S -> new Vector2d(1, -1);
+            case W -> new Vector2d(0, 1);
         };
     }
 
