@@ -12,9 +12,9 @@ public class Rect {
     }
 
     public boolean collideRect(Rect other){
-        return !(other.x > x + width ||
-                other.x + other.width < x ||
-                other.y + other.height < y ||
-                other.y > y + height);
+        return !(other.x >= x + width ||
+                other.x + other.width <= x ||
+                other.y + other.height <= y ||
+                other.y >= y + height);
     }
 }

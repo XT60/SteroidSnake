@@ -55,8 +55,26 @@ public enum Direction {
         return switch (this) {
             case N -> new Vector2d(-1, 0);
             case E -> new Vector2d(0, -1);
-            case S -> new Vector2d(1, -1);
+            case S -> new Vector2d(1, 0);
             case W -> new Vector2d(0, 1);
+        };
+    }
+
+    public Direction rotateClockwise(){
+        return switch (this) {
+            case N -> E;
+            case E -> S;
+            case S -> W;
+            case W -> N;
+        };
+    }
+
+    public Direction rotateCounterClockwise(){
+        return switch (this) {
+            case N -> W;
+            case E -> N;
+            case S -> E;
+            case W -> S;
         };
     }
 

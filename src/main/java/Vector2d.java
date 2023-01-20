@@ -18,11 +18,6 @@ public class Vector2d {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(y, x);
-    }
-
-    @Override
     public String toString() {
         return String.format("(%s,%s)", this.x, this.y);
     }
@@ -51,23 +46,6 @@ public class Vector2d {
         return new Vector2d(this.x - other.x, this.y - other.y);
     }
 
-    public boolean equals(Object other){
-        if (this == other){
-            return true;
-        }
-        if (!(other instanceof Vector2d)){
-            return false;
-        }
-        Vector2d that = (Vector2d) other;
-        if (this.x != that.x){
-            return false;
-        }
-        if (this.y != that.y){
-            return false;
-        }
-        return true;
-    }
-
     Vector2d opposite(){
         return new Vector2d(this.y, this.x);
     }
@@ -78,4 +56,23 @@ public class Vector2d {
         return Vector2d.add(mapDirection.toUnitVector(), this);
     }
 
+    public Rect getUnitRect(){
+        return new Rect(this.x, this.y, 1, 1);
+    }
+
+
+    public int hash;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector2d vector2d = (Vector2d) o;
+        return y == vector2d.y && x == vector2d.x && hash == vector2d.hash;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(y, x, hash);
+    }
 }
