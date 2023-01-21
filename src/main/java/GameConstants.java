@@ -4,5 +4,5 @@ public class GameConstants {
     static final int BD = 1;
     static final int BP = 1;
     static final int P = 2;
-    static final int N = 20;
+    static final int N = 50;
 }

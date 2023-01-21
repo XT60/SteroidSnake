@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f788b048-b7b0-48a0-8b06-d1a690d0433d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Exercise.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Direction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GameConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MapObject.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SnakeBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SnakeBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Steroid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Steroid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Vector2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vector2d.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/highScore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/highScore.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +43,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -110,7 +104,8 @@
       <workItem from="1673884240903" duration="4618000" />
       <workItem from="1674072887724" duration="6340000" />
       <workItem from="1674114830130" duration="2072000" />
-      <workItem from="1674219736256" duration="23011000" />
+      <workItem from="1674219736256" duration="24750000" />
+      <workItem from="1674289677420" duration="3204000" />
     </task>
     <servers />
   </component>

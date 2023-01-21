@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Engine implements Runnable{
     private final GameConstants constants = new GameConstants();
-    private final HashMap<Vector2d, Steroid> steroids = new HashMap<Vector2d, Steroid>();
-    private final HashMap<Vector2d, Exercise> exercises = new HashMap<Vector2d, Exercise>();
+    private final HashMap<Vector2d, MapObject> mapObjects  = new HashMap<>();
     private double highScore;
     private double currScore = 0;
     private final Snake snake;
+    private boolean interruptedStop = false;
     Gui gui;
     private final int sleepInterval = 300;
     int initialObjectCount = (int) Math.floor(Math.sqrt(GameConstants.N));
@@ -22,7 +22,6 @@ public class Engine implements Runnable{
 
 
     Engine(){
-        dumpHighScore();
         highScore = loadHighScore();
         snake = new Snake();
         addRandomObjects(initialObjectCount);
@@ -31,51 +30,45 @@ public class Engine implements Runnable{
 
     private void updateCollisionsWithObjects() {
         int currInteractions = 0;
-        ArrayList<Vector2d> SteroidsPositionsToRemove = new ArrayList<Vector2d>();
-        for (Map.Entry<Vector2d, Steroid> entry : steroids.entrySet()){
-            if (snake.doesHeadCollide(entry.getKey().getUnitRect())){
-                snake.storeSteroid(entry.getValue());
-                SteroidsPositionsToRemove.add(entry.getKey());
-                currInteractions += 1;
-            }
-        }
-        for(Vector2d position : SteroidsPositionsToRemove){
-            steroids.remove(position);
-        }
-        ArrayList<Vector2d> ExercisePositionsToRemove = new ArrayList<Vector2d>();
-        for (Map.Entry<Vector2d, Exercise> entry : exercises.entrySet()){
-            if (snake.doesHeadCollide(entry.getKey().getUnitRect())){
-                switch (entry.getValue()){
-                    case BenchPress -> snake.benchPress();
-                    case DeadLift -> snake.deadLift();
+        ArrayList<Vector2d> mapObjectPositionsToRemove = new ArrayList<Vector2d>();
+        for (Map.Entry<Vector2d, MapObject> entry : mapObjects.entrySet()) {
+            Vector2d position = entry.getKey();
+            if (snake.doesHeadCollide(position.getUnitRect())) {
+                MapObject mapObject = entry.getValue();
+                if (mapObject.isSteroid()) {
+                    snake.storeSteroid(mapObject.castToSteroid());
+                } else if (mapObject.isExercise()) {
+                    snake.doExercise(mapObject.castToExercise());
                 }
-                ExercisePositionsToRemove.add(entry.getKey());
+                mapObjectPositionsToRemove.add(position);
                 currInteractions += 1;
             }
         }
-        for(Vector2d position : ExercisePositionsToRemove){
-            exercises.remove(position);
+        for(Vector2d position : mapObjectPositionsToRemove){
+            mapObjects.remove(position);
         }
         addRandomObjects(currInteractions);
     }
 
     public void run(){
-        while (!snake.isDead()){
+        while (!snake.isDead() && !interruptedStop){
             updateCollisionsWithObjects();
             snake.updateVariables();
             updateScore();
             Platform.runLater(() -> {gui.draw();});
             try {
-                TimeUnit.MILLISECONDS.sleep(sleepInterval);
+                TimeUnit.MILLISECONDS.sleep(sleepInterval / snake.getVelocity());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        if (currScore > highScore){
-            highScore = currScore;
-            dumpHighScore();
+        if (!interruptedStop){
+            if (currScore > highScore){
+                highScore = currScore;
+                dumpHighScore();
+            }
+            Platform.runLater(() -> {gui.informThatGameFinished(currScore, highScore);});
         }
-        gui.informThatGameFinished(currScore, highScore);
     }
 
     private void addRandomObjects(int objectCount){
@@ -94,16 +87,8 @@ public class Engine implements Runnable{
                 default -> null;
             };
 
-
-            if (newObject instanceof Steroid){
-                steroids.put(freePosition,(Steroid)newObject);
-            }
-            else if (newObject instanceof Exercise){
-                exercises.put(freePosition,(Exercise)newObject);
-            }
-            else{
-                throw new RuntimeException();
-            }
+            MapObject newMapObject = new MapObject(newObject);
+            mapObjects.put(freePosition,newMapObject);
         }
     }
 
@@ -111,8 +96,7 @@ public class Engine implements Runnable{
         Random rand = new Random();
         ArrayList<Vector2d> freePositions = new ArrayList<Vector2d>();
         Set<Vector2d> takenPositions = new HashSet<>(getSnakeCellPositions());
-        takenPositions.addAll(steroids.keySet());
-        takenPositions.addAll(exercises.keySet());
+        takenPositions.addAll(mapObjects.keySet());
         while (freePositions.size() < objectCount){
             Vector2d newPosition = new Vector2d(Math.abs(rand.nextInt()) % GameConstants.N,
                     Math.abs(rand.nextInt()) % GameConstants.N);
@@ -162,6 +146,10 @@ public class Engine implements Runnable{
         }
     }
 
+    public void stop(){
+        interruptedStop = true;
+    }
+
     public void setGui(Gui gui) {
         this.gui = gui;
     }
@@ -170,12 +158,8 @@ public class Engine implements Runnable{
         return snake.getCellPositions();
     }
 
-    public HashMap<Vector2d, Steroid> getSteroids() {
-        return steroids;
-    }
-
-    public HashMap<Vector2d, Exercise> getExercises() {
-        return exercises;
+    public HashMap<Vector2d, MapObject> getMapObjects() {
+        return mapObjects;
     }
 
     public void turnSnakeLeft(){

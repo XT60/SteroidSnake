@@ -116,21 +116,28 @@ public class Snake {
         }
     }
 
+    public void doExercise(Exercise exercise){
+        switch (exercise){
+            case BenchPress -> benchPress();
+            case DeadLift -> deadLift();
+        }
+    }
+
     public boolean doesHeadCollide(Rect rect){
         return this.head.getRect().collideRect(rect);
     }
 
 
-    public void deadLift(){
+    private void deadLift(){
         lengthen();
         this.length += GameConstants.BD;
     }
-    public void benchPress(){
+    private void benchPress(){
         increaseVelocity();
     }
 
     private void increaseVelocity(){
-        velocity = max(velocity + GameConstants.BP, GameConstants.VMax);
+        velocity = Math.min(velocity + GameConstants.BP, GameConstants.VMax);
     }
     public void storeSteroid(Steroid steroid){
         LD += steroid.getDose();
